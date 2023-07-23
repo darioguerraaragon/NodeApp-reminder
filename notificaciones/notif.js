@@ -4,8 +4,26 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
-const eventos = [];
+let eventos = [];
 const eventosNotificados = [];
+//
+const Eliminar = () => {
+  rl.question('Desea cancelar algun evento ? si/no : ', (res)=>{
+    if(res == 'si'){
+      console.log(eventos)
+      rl.question('Ingrese el nombre del evento a cancelar : ' , (res)=>{
+        //
+        eventos = eventos.filter(el => el.evento !== res)
+        console.log(`El evento ha sido cancelado`)
+        console.log(eventos)
+        //
+      })
+    }else{
+      console.log('Programa Cerrado')
+      rl.close()
+    }
+  })
+}
 //
  const Preguntas = () => {
   let agregarEvento = true;
@@ -26,6 +44,7 @@ const eventosNotificados = [];
               realizarPregunta();
             } else {
               console.log('Programa cerrado');
+              Eliminar()
               SisteaNotificacion();
             }
           });
