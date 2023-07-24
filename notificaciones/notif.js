@@ -7,6 +7,38 @@ const rl = readline.createInterface({
 let eventos = [];
 const eventosNotificados = [];
 //
+const actualizar = () => {
+  rl.question('Desea actualizar algun evento ? si/no : ', (res) => {
+    if (res == 'si') {
+      console.log(eventos);
+      rl.question('Escribe el nombre del evento a actualizar : ', (res) => {
+        const index = eventos.findIndex(el => el.evento === res);
+        if (index !== -1) { // Si el evento existe
+          console.log(`Evento a actualizar : ${eventos[index].evento} , fecha establecida : ${eventos[index].fecha} , hora establecida : ${eventos[index].hora}`);
+          rl.question('Nuevo nombre del evento : ', (res) => {
+            eventos[index].evento = res;
+            rl.question('Nueva fecha : ', (res) => {
+              eventos[index].fecha = res;
+              rl.question('Nueva Hora : ', (res) => {
+                eventos[index].hora = res;
+                console.log(eventos);
+                console.log(`Evento actualizado ${eventos}`);
+                SisteaNotificacion()
+              });
+            });
+          });
+        } else { // Si el evento no existe
+          console.log('El evento no existe');
+          console.log('Programa cerrado');
+        }
+      });
+    } else {
+      console.log('programa cerrado');
+      rl.close();
+    }
+  });
+};
+//
 const Eliminar = () => {
   rl.question('Desea cancelar algun evento ? si/no : ', (res)=>{
     if(res == 'si'){
@@ -19,12 +51,13 @@ const Eliminar = () => {
         //
       })
     }else{
-      console.log('Programa Cerrado')
-      rl.close()
+      actualizar()
     }
   })
 }
+
 //
+
  const Preguntas = () => {
   let agregarEvento = true;
   
